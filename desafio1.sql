@@ -40,27 +40,24 @@ CREATE TABLE IF NOT EXISTS `SpotifyClone`.`users` (
   `users_plan` INT NOT NULL,
   `user_subscription` DATETIME NOT NULL,
   PRIMARY KEY (`users_id`),
-  INDEX `fk_user_plan_idx` (`users_plan` ASC) VISIBLE,
   CONSTRAINT `fk_user_plan`
     FOREIGN KEY (`users_plan`)
-    REFERENCES `SpotifyClone`.`plan` (`plan_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    REFERENCES `SpotifyClone`.`plan` (`plan_id`))
 ENGINE = InnoDB;
 
 INSERT INTO SpotifyClone.users
   (users_name, users_age, users_plan, user_subscription)
 VALUES
-  ('Thati', '23', 'gratuito', '2019-10-20'),
-  ('Cintia', '35', 'familiar', '2017-12-30'),
-  ('Bill', '20', 'universitário', '2019-06-05'),
-  ('Roger', '45', 'pessoal', '2020-05-13'),
-  ('Norman', '58', 'pessoal', '2017-02-17'),
-  ('Patrick', '33', 'familiar', '2017-01-06'),
-  ('Vivian', '26', 'universitário', '2018-01-05'),
-  ('Carol', '19', 'universitário', '2018-02-14'),
-  ('Angelina', '42', 'familiar', '2018-04-29'),
-  ('Paul', '46', 'familiar', '2017-01-17');
+  ('Thati', '23', '1', '2019-10-20'),
+  ('Cintia', '35', '4', '2017-12-30'),
+  ('Bill', '20', '2', '2019-06-05'),
+  ('Roger', '45', '3', '2020-05-13'),
+  ('Norman', '58', '3', '2017-02-17'),
+  ('Patrick', '33', '4', '2017-01-06'),
+  ('Vivian', '26', '2', '2018-01-05'),
+  ('Carol', '19', '2', '2018-02-14'),
+  ('Angelina', '42', '4', '2018-04-29'),
+  ('Paul', '46', '4', '2017-01-17');
 
 -- -----------------------------------------------------
 -- Table `SpotifyClone`.`artists`
@@ -94,12 +91,9 @@ CREATE TABLE IF NOT EXISTS `SpotifyClone`.`albums` (
   `albums_release` YEAR NOT NULL,
   `id_author` INT NOT NULL,
   PRIMARY KEY (`albums_id`),
-  INDEX `fk_collection_id_idx` (`id_author` ASC) VISIBLE,
   CONSTRAINT `fk_collection_id`
     FOREIGN KEY (`id_author`)
-    REFERENCES `SpotifyClone`.`artists` (`artists_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    REFERENCES `SpotifyClone`.`artists` (`artists_id`))
 ENGINE = InnoDB;
 
 INSERT INTO SpotifyClone.albums
@@ -127,12 +121,9 @@ CREATE TABLE IF NOT EXISTS `SpotifyClone`.`songs` (
   `songs_duration` INT NOT NULL,
   `id_album` INT NOT NULL,
   PRIMARY KEY (`songs_id`),
-  INDEX `fk_id_album_idx` (`id_album` ASC) VISIBLE,
   CONSTRAINT `fk_id_album`
     FOREIGN KEY (`id_album`)
-    REFERENCES `SpotifyClone`.`albums` (`albums_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    REFERENCES `SpotifyClone`.`albums` (`albums_id`))
 ENGINE = InnoDB;
 
 INSERT INTO SpotifyClone.songs
@@ -185,21 +176,16 @@ VALUES
 DROP TABLE IF EXISTS `SpotifyClone`.`user_history` ;
 
 CREATE TABLE IF NOT EXISTS `SpotifyClone`.`user_history` (
-  `id_user` INT NOT NULL AUTO_INCREMENT,
+  `id_user` INT NOT NULL,
   `id_songs` INT NOT NULL,
   `play_date` DATETIME NOT NULL,
-  INDEX `fk_user_history_1_idx` (`id_user` ASC) VISIBLE,
-  INDEX `fk_song_history_idx` (`id_songs` ASC) VISIBLE,
+  PRIMARY KEY (id_user, id_songs),
   CONSTRAINT `fk_user_history`
     FOREIGN KEY (`id_user`)
-    REFERENCES `SpotifyClone`.`users` (`users_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    REFERENCES `SpotifyClone`.`users` (`users_id`),
   CONSTRAINT `fk_song_history`
     FOREIGN KEY (`id_songs`)
-    REFERENCES `SpotifyClone`.`songs` (`songs_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    REFERENCES `SpotifyClone`.`songs` (`songs_id`))
 ENGINE = InnoDB;
 
 INSERT INTO SpotifyClone.user_history
@@ -252,18 +238,13 @@ DROP TABLE IF EXISTS `SpotifyClone`.`follows` ;
 CREATE TABLE IF NOT EXISTS `SpotifyClone`.`follows` (
   `user_follows` INT NOT NULL,
   `artist_follows` INT NOT NULL,
-  INDEX `fk_follows_user_idx` (`user_follows` ASC) VISIBLE,
-  INDEX `fk_follows_artist_idx` (`artist_follows` ASC) VISIBLE,
+  PRIMARY KEY (user_follows, artist_follows),
   CONSTRAINT `fk_follows_user`
     FOREIGN KEY (`user_follows`)
-    REFERENCES `SpotifyClone`.`users` (`users_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    REFERENCES `SpotifyClone`.`users` (`users_id`),
   CONSTRAINT `fk_follows_artist`
     FOREIGN KEY (`artist_follows`)
-    REFERENCES `SpotifyClone`.`artists` (`artists_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    REFERENCES `SpotifyClone`.`artists` (`artists_id`))
 ENGINE = InnoDB;
 
 INSERT INTO SpotifyClone.follows
