@@ -4,8 +4,8 @@ SELECT
     'Usuário Ativo',
     'Usuário Inativo') AS 'condicao_usuario'
 FROM
-  SpotifyClone.users AS user
+  SpotifyClone.users AS users
     INNER JOIN
-  SpotifyClone.user_history AS hist ON hist.id_user = user.users_id
+  SpotifyClone.user_history AS hist ON hist.id_user = users.users_id
 GROUP BY usuario
 ORDER BY usuario;
