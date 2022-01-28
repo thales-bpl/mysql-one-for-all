@@ -107,7 +107,7 @@ VALUES
   ('Library of liberty', '2003', '4'),
   ('Chained Down', '2007', '5'),
   ('Cabinet of fools', '2012', '5'),
-  ('No garantees', '2015', '5'),
+  ('No guarantees', '2015', '5'),
   ('Apparatus', '2015', '6');
 
 -- -----------------------------------------------------
