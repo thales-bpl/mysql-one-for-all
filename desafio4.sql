@@ -1,5 +1,5 @@
 SELECT 
-  `user`.users_name AS 'usuario',
+  users.users_name AS 'usuario',
   IF(MAX(YEAR(hist.play_date) = 2021),
     'Usuário Ativo',
     'Usuário Inativo') AS 'condicao_usuario'
